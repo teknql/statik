@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+*.log
+tmp/
+.nrepl-port
+classes/
+.cpcache/
+/statik
+/out/
