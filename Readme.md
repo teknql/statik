@@ -20,7 +20,7 @@ under the hood.
   [:html
    [:head
     [:title (str site-name " - " title)]
-    (link-stylesheet global-style)]
+    (stylesheet global-style)]
    [:body content]])
 
 (def-asset home-page
@@ -39,6 +39,23 @@ out/
   css/global.css
 ```
 
+
+## Usage
+
+### Live Reload
+```
+statik watch site.clj
+# Starts a (live-reloading) server on localhost:3000
+```
+
+### Serving
+```
+# Start a staitc server in the current directory
+statik serve
+
+# Start a staitc server in out/
+statik serve out/
+```
 
 ## Building
 

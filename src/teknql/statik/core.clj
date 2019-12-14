@@ -53,7 +53,7 @@
   [sym]
   (:path sym))
 
-(defn link-stylesheet
+(defn stylesheet
   "Returns a hiccup link tag for including a css stylesheet for the proided asset"
   [asset]
   [:link {:rel  "stylesheet"
@@ -68,6 +68,6 @@
      s
      {:bindings {'def-asset       def-asset
                  'asset-path      asset-path
-                 'link-stylesheet link-stylesheet
+                 'stylesheet      stylesheet
                  'register-asset! #(swap! assets conj %)}})
     @assets))

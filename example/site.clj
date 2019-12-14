@@ -10,7 +10,7 @@
   [:html
    [:head
     [:title (str site-name " - " title)]
-    (link-stylesheet global-style)]
+    (stylesheet global-style)]
    [:body content]])
 
 (def-asset home-page

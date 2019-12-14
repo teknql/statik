@@ -1,10 +1,13 @@
-{:paths ["src"]
+{:paths ["src" "resources"]
  :aliases
- {:native-image
+ {:main
+  {:main-opts "-m teknql.statik.main"}
+  :native-image
   {:main-opts ["-m clj.native-image teknql.statik.main"
                "--initialize-at-build-time"
                ;; optional native image name override
                "-H:Name=statik"
+               "-H:EnableURLProtocols=http"
                "-H:+ReportUnsupportedElementsAtRuntime"]
    :jvm-opts  ["-Dclojure.compiler.direct-linking=true"]
    :extra-deps
@@ -14,11 +17,13 @@
  :deps
  {;; Clojure 1.10 has issues with GraalVM. Should be resolved in 1.11
   ;; More information here: https://clojure.atlassian.net/browse/CLJ-1472
-  org.clojure/clojure     {:mvn/version "1.9.0"}
-  hiccup                  {:mvn/version "2.0.0-alpha2"}
-  garden                  {:mvn/version "1.3.9"}
-  pathetic                {:mvn/version "0.5.1"}
-  cli-matic               {:mvn/version "0.3.11"}
-  borkdude/sci            {:mvn/version "0.0.12-alpha.3"}
-  ring/ring-core          {:mvn/version "1.8.0"}
-  ring/ring-jetty-adapter {:mvn/version "1.8.0"}}}
+  org.clojure/clojure {:mvn/version "1.9.0"}
+  hiccup              {:mvn/version "2.0.0-alpha2"}
+  garden              {:mvn/version "1.3.9"}
+  pathetic            {:mvn/version "0.5.1"}
+  cli-matic           {:mvn/version "0.3.11"}
+  borkdude/sci        {:mvn/version "0.0.12-alpha.3"}
+  ring/ring-core      {:mvn/version "1.8.0"}
+  http-kit            {:mvn/version "2.3.0"}
+  compojure           {:mvn/version "1.6.1"}
+  watchtower          {:mvn/version "0.1.1"}}}
