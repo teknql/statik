@@ -50,8 +50,7 @@
   (atom (Date.)))
 
 (defn- watch-dirs! [dirs]
-  (watcher/watch 100 dirs
-                 #(reset! last-modified (Date.))))
+  (watcher/watch dirs #(reset! last-modified (Date.))))
 
 (defn- random-uuid []
   (str (UUID/randomUUID)))

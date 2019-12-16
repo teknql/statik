@@ -24,7 +24,7 @@
   "Starts an http server on the proided port"
   [{:keys [dir port block]
     :or   {block true}}]
-  (let [dir     (.getAbsolutePath (io/as-file dir))
+  (let [dir     (io/as-file dir)
         handler (-> (fn [req]
                       {:status 404
                        :body   "Not Found"})
@@ -39,7 +39,7 @@
                                             uri))]
                            (handler req)))))
                     (wrap-refresh [dir]))]
-    (println "Starting HTTP Server:" (str "http://localhost:" port) )
+    (println "Starting HTTP Server:" (str "http://localhost:" port))
     (let [stop (http/run-server handler {:port port})]
       (if-not block
         stop
@@ -55,7 +55,7 @@
   [{:keys [dir port block file]
     :or   {block true}}]
   (compile-file! {:dir dir :file file})
-  (watcher/watch 100 [file] #(compile-file! {:dir dir :file file}))
+  (watcher/watch [file] #(compile-file! {:dir dir :file file}))
   (serve {:dir dir :port port :block block}))
 
 
