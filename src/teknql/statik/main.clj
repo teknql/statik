@@ -8,17 +8,25 @@
             [teknql.statik.watcher :as watcher]
             [cli-matic.core :as cli]
             [clojure.java.io :as io]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [garden.core]
+            [garden.color]
+            [garden.units]
+            [garden.stylesheet]
+            [taoensso.timbre :as log])
   (:gen-class))
 
 
 (defn compile-file!
   "Compiles the provided file and writes the generated assets to `out-dir`"
   [{:keys [file dir]}]
-  (println "Compiling" (str file "..."))
-  (let [assets     (statik/eval-string (slurp file))
-        output-map (statik/compile assets)]
-    (statik/write! output-map dir)))
+  (try
+    (log/info "Compiling" (str file "..."))
+    (let [assets     (statik/eval-string (slurp file))
+          output-map (statik/compile assets)]
+      (statik/write! output-map dir))
+    (catch Exception e
+      (log/error e "Error compiling file"))))
 
 (defn serve
   "Starts an http server on the proided port"
@@ -39,7 +47,7 @@
                                             uri))]
                            (handler req)))))
                     (wrap-refresh [dir]))]
-    (println "Starting HTTP Server:" (str "http://localhost:" port))
+    (log/info "Starting HTTP Server:" (str "http://localhost:" port))
     (let [stop (http/run-server handler {:port port})]
       (if-not block
         stop
@@ -47,7 +55,7 @@
           (let [input (read-line)]
             (if (= "quit" input)
               (do (stop)
-                  (println "Goodbye!"))
+                  (log/info "Goodbye!"))
               (recur))))))))
 
 (defn watch
@@ -55,7 +63,7 @@
   [{:keys [dir port block file]
     :or   {block true}}]
   (compile-file! {:dir dir :file file})
-  (watcher/watch [file] #(compile-file! {:dir dir :file file}))
+  (watcher/watch [file] #(compile-file! {:file file :dir dir}))
   (serve {:dir dir :port port :block block}))
 
 
@@ -67,7 +75,8 @@
         port-opt {:option  "port"
                   :type    :int
                   :as      "The port to start the server on"
-                  :default 3000}
+                  :default 3000
+                  :short   "p"}
         dir-opt  {:option  "dir"
                   :short   "d"
                   :as      "The directory to output to / serve from"
