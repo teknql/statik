@@ -39,12 +39,23 @@ out/
   css/global.css
 ```
 
+## Namespaces and Requires
+
+Statik includes the following namespaces by default:
+
+- `garden.core`
+- `garden.stylesheet`
+- `garden.color`
+- `garden.units`
+
+You can also require your own namespaces, assuming you are running from a root directory, `src/`
+will be on the classpath.
 
 ## Usage
 
 ### Live Reload
 ```
-statik watch site.clj
+statik watch src/site.clj
 # Starts a (live-reloading) server on localhost:3000
 ```
 

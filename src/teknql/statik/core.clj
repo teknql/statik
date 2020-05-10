@@ -3,7 +3,11 @@
             [hiccup.core :as hiccup]
             [pathetic.core :as path]
             [clojure.java.io :as io]
-            [sci.core :as sci])
+            [sci.core :as sci]
+            [garden.color]
+            [garden.stylesheet]
+            [garden.units]
+            [clojure.string :as str])
   (:refer-clojure :exclude [compile]))
 
 (defn compile-html
@@ -60,14 +64,43 @@
           :type "text/css"
           :href (asset-path asset)}])
 
+(def included-namespaces
+  "Namespaces that will automatically be made available to the SCI interpriter"
+  '[garden.core
+    garden.stylesheet
+    garden.color
+    garden.units])
+
+(defn- ns->src-path
+  "Utility to take a required namespace and load a src path with it"
+  [ns]
+  (str
+    "src/"
+    (-> ns
+        (str/replace "-" "_")
+        (str/replace "." "/"))
+    ".clj"))
+
 (defn eval-string
   "Ealuates the provided string. Returns a list of assets defined by the file."
   [s]
-  (let [assets (atom [])]
+  (let [assets      (atom [])
+        inferred-ns (some-> (re-find #"\(ns ((:?[a-z]|\.|-)+)\b" s)
+                            (second)
+                            (symbol))]
     (sci/eval-string
-     s
-     {:bindings {'def-asset       def-asset
-                 'asset-path      asset-path
-                 'stylesheet      stylesheet
-                 'register-asset! #(swap! assets conj %)}})
+      s
+      {:load-fn    (fn [ns]
+                     (try
+                       (let [src-path (ns->src-path ns)]
+                         {:file   src-path
+                          :source (slurp src-path)})
+                       (catch java.io.FileNotFoundException _
+                         nil)))
+       :namespaces (into {(or inferred-ns
+                              'user) {'def-asset       def-asset
+                                      'asset-path      asset-path
+                                      'stylesheet      stylesheet
+                                      'register-asset! #(swap! assets conj %)}}
+                         (map (juxt identity ns-interns) included-namespaces))})
     @assets))
