@@ -7,3 +7,4 @@ classes/
 .cpcache/
 /statik
 /out/
+build/
