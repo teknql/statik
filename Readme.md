@@ -68,8 +68,58 @@ statik serve
 statik serve out/
 ```
 
-## Building
+## Building and Installing
 
+To build statik you will need Graal v20.2.0 w/ OpenJDK v11, as well as the native-image plugin.
+
+
+### Arch / Manjaro
+
+```sh
+# Install via Yay / Pacman
+yay -S native-image-jdk11-bin jdk11-graalvm-bin
+
+# Set as the default JVM
+sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default
+sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default-runtime
+
+# Ensure its in your PATH
+export PATH=/usr/lib/jvm/default/bin:$PATH
 ```
-clj -Anative-image
+
+### Installing Graal From Scratch
+
+Download the appropriate release of Graal for you VM from [the releases page](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-20.2.0).
+
+```sh
+# Untar it
+tar -xvzf graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
+
+# Install it
+sudo mv ./graalvm-ce-java11-20.2.0 /usr/lib/jvm/java-11-graalvm
+
+# Set it as the default JVM
+sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default
+sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default-runtime
+
+# Ensure its in your PATH
+export PATH=/usr/lib/jvm/default/bin:$PATH
+
+# Install Native Image
+gu install native-image
+```
+
+### Compiling Statik
+
+```sh
+# Compile
+cd /path/to/statik
+mkdir build ;; This is the output dir, but its not version controlled
+clj -M:native-image
+
+# Install Binary
+cp build/statik ~/.local/bin
+
+# Test and Enjoy
+statik --help
 ```
