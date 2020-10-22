@@ -98,6 +98,8 @@ tar -xvzf graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
 sudo mv ./graalvm-ce-java11-20.2.0 /usr/lib/jvm/java-11-graalvm
 
 # Set it as the default JVM
+sudo rm -f /usr/lib/jvm/default
+sudo rm -f /usr/lib/jvm/default-runtime
 sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default
 sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default-runtime
 
