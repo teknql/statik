@@ -80,8 +80,7 @@ To build statik you will need Graal v20.2.0 w/ OpenJDK v11, as well as the nativ
 yay -S native-image-jdk11-bin jdk11-graalvm-bin
 
 # Set as the default JVM
-sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default
-sudo ln -s /usr/lib/jvm/java-11-graalvm /usr/lib/jvm/default-runtime
+sudo archlinux-java set java-11-graalvm
 
 # Ensure its in your PATH
 export PATH=/usr/lib/jvm/default/bin:$PATH
