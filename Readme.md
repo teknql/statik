@@ -1,6 +1,6 @@
 # Statik
 
-CLI static site generator using an embedded clojre DSL. Uses hiccup and garden
+CLI static site generator using an embedded clojure DSL. Uses hiccup and garden
 under the hood.
 
 
@@ -61,10 +61,10 @@ statik watch src/site.clj
 
 ### Serving
 ```
-# Start a staitc server in the current directory
+# Start a statik server in the current directory
 statik serve
 
-# Start a staitc server in out/
+# Start a statik server in out/
 statik serve out/
 ```
 
@@ -88,7 +88,7 @@ export PATH=/usr/lib/jvm/default/bin:$PATH
 
 ### Installing Graal From Scratch
 
-Download the appropriate release of Graal for you VM from [the releases page](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-20.2.0).
+Download the appropriate release of Graal for your VM from [the releases page](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-20.2.0).
 
 ```sh
 # Untar it
@@ -115,8 +115,8 @@ gu install native-image
 ```sh
 # Compile
 cd /path/to/statik
-mkdir build ;; This is the output dir, but its not version controlled
-clj -M:native-image
+mkdir build # This is the output dir, but its not version controlled
+clj -A:native-image
 
 # Install Binary
 cp build/statik ~/.local/bin
