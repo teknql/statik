@@ -124,3 +124,19 @@ cp build/statik ~/.local/bin
 # Test and Enjoy
 statik --help
 ```
+
+## clj-kondo config
+
+If you use clj-kondo for linting, the following is recommended:
+
+```clojure
+;; .clj-kondo/config.edn
+{:lint-as {clojure.core/def-asset clojure.core/def}
+ :linters {:unresolved-symbol
+           {:exclude [(def-asset)
+                      def-asset
+                      stylesheet
+                      asset-path
+                      register-asset!]}}}
+
+```
