@@ -133,10 +133,7 @@ If you use clj-kondo for linting, the following is recommended:
 ;; .clj-kondo/config.edn
 {:lint-as {clojure.core/def-asset clojure.core/def}
  :linters {:unresolved-symbol
-           {:exclude [(def-asset)
-                      def-asset
-                      stylesheet
-                      asset-path
-                      register-asset!]}}}
-
+           {:exclude [def-asset stylesheet asset-path register-asset!]}}}
 ```
+
+Note that this doesn't yet cover ignoring vars created by `def-asset`.
