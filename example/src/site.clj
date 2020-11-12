@@ -1,3 +1,6 @@
+(ns site
+  (:require [require-me]))
+
 (def site-name "My amazing website")
 
 (def-asset global-style
@@ -16,4 +19,4 @@
 (def-asset home-page
   {:path "/index.html"
    :type :html
-   :data (page "Hello world" [:p "This is magic"])})
+   :data (page "Hello world" (require-me/foo) #_[:p "This is magic"])})

@@ -5,6 +5,7 @@
   :native-image
   {:main-opts ["-m clj.native-image teknql.statik.main"
                "--initialize-at-build-time"
+               "--initialize-at-run-time=com.sun.jna.platform.win32.User32"
                "--no-fallback"
                "--no-server"
                ;; optional native image name override
