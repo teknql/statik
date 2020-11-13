@@ -71,10 +71,10 @@
 
 (defn watch
   "Starts a development server and watches the provided file for changes"
-  [{:keys [dir port block file]
+  [{:keys [dir port block file deps]
     :or   {block true}}]
-  (compile-file! {:dir dir :file file})
-  (watcher/watch [file] #(compile-file! {:file file :dir dir}))
+  (compile-file! {:dir dir :file file :deps deps})
+  (watcher/watch [file] #(compile-file! {:file file :dir dir :deps deps}))
   (serve {:dir dir :port port :block block}))
 
 
