@@ -30,4 +30,5 @@
   http-kit            {:mvn/version "2.3.0"}
   compojure           {:mvn/version "1.6.1"}
   watchtower          {:mvn/version "0.1.1"}
+  clj-org/clj-org     {:mvn/version "0.0.2"}
   com.taoensso/timbre {:mvn/version "4.10.0"}}}

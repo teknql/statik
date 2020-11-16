@@ -7,6 +7,7 @@
             [garden.color]
             [garden.stylesheet]
             [garden.units]
+            [clj-org.org]
             [clojure.string :as str])
   (:refer-clojure :exclude [compile]))
 
@@ -69,7 +70,8 @@
   '[garden.core
     garden.stylesheet
     garden.color
-    garden.units])
+    garden.units
+    clj-org.org])
 
 (defn- ns->src-path
   "Utility to take a required namespace and load a src path with it"
