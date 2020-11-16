@@ -70,8 +70,7 @@
   '[garden.core
     garden.stylesheet
     garden.color
-    garden.units
-    clj-org.org])
+    garden.units])
 
 (defn- ns->src-path
   "Utility to take a required namespace and load a src path with it"
@@ -82,6 +81,12 @@
         (str/replace "-" "_")
         (str/replace "." "/"))
     ".clj"))
+
+(defn parse-org [path]
+  "Take a path and return a map of title and content."
+  (-> path
+      (slurp)
+      (clj-org.org/parse-org)))
 
 (defn eval-string
   "Ealuates the provided string. Returns a list of assets defined by the file."
@@ -103,6 +108,7 @@
                               'user) {'def-asset       def-asset
                                       'asset-path      asset-path
                                       'stylesheet      stylesheet
+                                      'parse-org       parse-org
                                       'register-asset! #(swap! assets conj %)}}
                          (map (juxt identity ns-interns) included-namespaces))})
     @assets))
