@@ -7,6 +7,7 @@
             [garden.color]
             [garden.stylesheet]
             [garden.units]
+            [clj-org.org]
             [clojure.string :as str])
   (:refer-clojure :exclude [compile]))
 
@@ -81,6 +82,12 @@
         (str/replace "." "/"))
     ".clj"))
 
+(defn parse-org [path]
+  "Take a path and return a map of title and content."
+  (-> path
+      (slurp)
+      (clj-org.org/parse-org)))
+
 (defn eval-string
   "Ealuates the provided string. Returns a list of assets defined by the file."
   [s]
@@ -101,6 +108,7 @@
                               'user) {'def-asset       def-asset
                                       'asset-path      asset-path
                                       'stylesheet      stylesheet
+                                      'parse-org       parse-org
                                       'register-asset! #(swap! assets conj %)}}
                          (map (juxt identity ns-interns) included-namespaces))})
     @assets))

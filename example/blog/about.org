@@ -1,0 +1,27 @@
+#+TITLE: Sur Moi
+#+TAGS: foo bar baz
+
+* A blog page!
+
+Now /this/ is content!
+
+
+** A subheading
+
+Woah
+
+* What about formatting?
+
+A list?
+
+- *BOLD*
+- /Italic/
+- ~fixed-width~
+
+#+BEGIN_SRC clojure
+(defn hello
+  ([] "Greetings, nerd")
+  ([name] (format "Greetings %s" name)))
+
+(hello "friend")
+#+END_SRC

@@ -13,7 +13,15 @@
     (stylesheet global-style)]
    [:body content]])
 
+(def-asset about-page
+  {:path "/about.html"
+   :type :html
+   :data (let [{title :title
+                content :content}
+               (parse-org "./example/blog/about.org")]
+           (page title content))})
+
 (def-asset home-page
   {:path "/index.html"
    :type :html
-   :data (page "Hello world" [:p "This is magic"])})
+   :data (page "Hello world" [:a {:href (asset-path about-page)} "This is a blog link."])})
